@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Timetable Scheduler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>AI Timetable <span>Scheduler</span></h1>
+            <p>Generate optimized, conflict-free university schedules using Genetic Algorithms.</p>
+        </header>
+
+        <main>
+            <section class="glass-panel controls">
+                <div class="input-group">
+                    <label for="generations">Max Generations</label>
+                    <input type="number" id="generations" value="100" min="10" max="5000">
+                    <small>Higher = better results, but takes longer.</small>
+                </div>
+                <div class="input-group">
+                    <label for="population">Population Size</label>
+                    <input type="number" id="population" value="50" min="10" max="1000">
+                    <small>Size of gene pool per generation.</small>
+                </div>
+                <button id="generate-btn" class="primary-btn">
+                    <span class="btn-text">Generate Timetable</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </section>
+
+            <section id="results-section" class="glass-panel results hidden">
+                <div class="metrics">
+                    <div class="metric-card">
+                        <h3>Hard Conflicts</h3>
+                        <p id="metric-hc">0</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Soft Penalty</h3>
+                        <p id="metric-sp">0</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Fitness Score</h3>
+                        <p id="metric-fit">0.000</p>
+                    </div>
+                </div>
+
+                <div class="controls-bar">
+                    <div class="filter-group">
+                        <label for="view-select">View By:</label>
+                        <select id="view-select">
+                            <option value="group">Group</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="room">Room</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="entity-select" id="entity-label">Select Group:</label>
+                        <select id="entity-select">
+                            <!-- Populated via JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="timetable">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Time</th>
+                                <th>Course</th>
+                                <th>Type</th>
+                                <th id="col-dynamic">Teacher / Room</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timetable-body">
+                            <!-- Rows populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
